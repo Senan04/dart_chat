@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-// final colorScheme = ColorScheme.fromSeed(
-//   brightness: Brightness.dark,
-//   seedColor: const Color.fromARGB(255, 1, 31, 26),
-// );
-
-// final theme = ThemeData().copyWith(
-//   colorScheme: colorScheme,
-//   scaffoldBackgroundColor: colorScheme.surface,
-//   textTheme: GoogleFonts.latoTextTheme().apply(bodyColor: Colors.white),
-// );
 
 void main() {
   runApp(const MainApp());
