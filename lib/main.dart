@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 
+import 'package:dart_chat/screens/auth.dart';
+
 void main() {
   runApp(const MainApp());
 }
@@ -15,11 +17,7 @@ class MainApp extends StatelessWidget {
       theme: FlexThemeData.light(scheme: FlexScheme.cyanM3),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.cyanM3),
       themeMode: ThemeMode.system,
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      home: AuthScreen(),
     );
   }
 }
