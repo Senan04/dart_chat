@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -34,66 +32,104 @@ class _AuthScreenState extends State<AuthScreen> {
                 'DartChat',
                 style: NeumorphicStyle(
                   depth: 4,
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.black
-                      : Colors.white,
-                  shadowLightColor:
-                      Theme.of(context).brightness == Brightness.light
-                          ? Colors.grey.shade300
-                          : Colors.grey.shade600,
-                  shadowDarkColor:
-                      Theme.of(context).brightness == Brightness.light
-                          ? Colors.grey.shade700
-                          : Colors.black,
+                  color: Colors.black,
+                  shadowLightColor: Colors.grey.shade300,
+                  shadowDarkColor: Colors.grey.shade700,
                 ),
                 textStyle: NeumorphicTextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Card(
+              Neumorphic(
                 margin: const EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Form(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Neumorphic(
-                            style: NeumorphicStyle(
-                                shape: NeumorphicShape.flat,
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(32)),
-                                depth: -4,
-                                lightSource: LightSource.topLeft,
-                                color:
-                                    const Color.fromARGB(176, 211, 211, 211)),
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
+                style: NeumorphicStyle(
+                  boxShape: NeumorphicBoxShape.roundRect(
+                    BorderRadius.circular(15.0),
+                  ),
+                  lightSource: LightSource.topLeft,
+                  shape: NeumorphicShape.flat,
+                  depth: 18,
+                  color: Colors.grey.shade100,
+                  shadowLightColor: Colors.white,
+                  shadowDarkColor: Colors.grey.shade600,
+                  intensity: 0.7,
+                  border: const NeumorphicBorder.none(),
+                ),
+                child: Card(
+                  margin: const EdgeInsets.all(0),
+                  color: Colors.grey.shade200,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Form(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(left: 5.0, bottom: 2.0),
+                              child: Text(
+                                'E-Mail',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Neumorphic(
-                            style: NeumorphicStyle(
+                            Neumorphic(
+                              style: NeumorphicStyle(
                                 shape: NeumorphicShape.flat,
                                 boxShape: NeumorphicBoxShape.roundRect(
                                     BorderRadius.circular(32)),
                                 depth: -8,
                                 lightSource: LightSource.topLeft,
-                                color:
-                                    const Color.fromARGB(176, 211, 211, 211)),
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
+                                color: Colors.grey.shade300,
+                              ),
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 12.0,
+                                  ),
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                autocorrect: false,
+                                textCapitalization: TextCapitalization.none,
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 5.0, bottom: 2.0),
+                              child: Text(
+                                'Password',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Neumorphic(
+                              style: NeumorphicStyle(
+                                shape: NeumorphicShape.flat,
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(32)),
+                                depth: -8,
+                                lightSource: LightSource.topLeft,
+                                color: Colors.grey.shade300,
+                              ),
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 12.0,
+                                  ),
+                                ),
+                                autocorrect: false,
+                                textCapitalization: TextCapitalization.none,
+                                obscureText: true,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
