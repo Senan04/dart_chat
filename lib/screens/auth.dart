@@ -51,37 +51,49 @@ class _AuthScreenState extends State<AuthScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Neumorphic(
+              Card(
                 margin: const EdgeInsets.all(20),
-                style: NeumorphicStyle(
-                    shape: NeumorphicShape.concave,
-                    boxShape:
-                        NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                    depth: 8,
-                    lightSource: LightSource.topLeft,
-                    color: Colors.grey),
-                child: Card(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Form(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          const Color.fromARGB(255, 201, 3, 3),
-                                      width: 2),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(32.0)),
-                                ),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Form(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Neumorphic(
+                            style: NeumorphicStyle(
+                                shape: NeumorphicShape.flat,
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(32)),
+                                depth: -4,
+                                lightSource: LightSource.topLeft,
+                                color:
+                                    const Color.fromARGB(176, 211, 211, 211)),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Neumorphic(
+                            style: NeumorphicStyle(
+                                shape: NeumorphicShape.flat,
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(32)),
+                                depth: -8,
+                                lightSource: LightSource.topLeft,
+                                color:
+                                    const Color.fromARGB(176, 211, 211, 211)),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
