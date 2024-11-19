@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
       theme: FlexThemeData.light(scheme: FlexScheme.cyanM3),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.cyanM3),
       themeMode: ThemeMode.system,
-      home: AuthScreen(),
+      home: const AuthScreen(),
     );
   }
 }
