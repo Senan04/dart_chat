@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1057468805824",
+    "project_id": "dartchat-47a46",
+    "storage_bucket": "dartchat-47a46.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057468805824:android:65e6a4ac0f0b995fe9b325",
+        "android_client_info": {
+          "package_name": "com.aslan.dartchat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFB0G5E9f32AcDFLeDJ7bfeLzjVAryg1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
