@@ -41,3 +41,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+#------------------------------
+# Firebase-specific files
+google-services.json
+firebase.json
+lib/firebase_options.dart
+
+# Flutter/Dart build files
+/build/
+
+# Pub package manager lockfile
+pubspec.lock
