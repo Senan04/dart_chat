@@ -8,6 +8,24 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  var _enteredEmail = '';
+  var _enteredPassword = '';
+
+  var _emailValid = true;
+  var _passwordValid = true;
+
+  void _submit() {
+    final isValid = _formKey.currentState!.validate();
+
+    if (isValid) {
+      _formKey.currentState!.save();
+      print(_enteredEmail);
+      print(_enteredPassword);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +81,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Form(
+                        key: _formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -78,7 +97,8 @@ class _AuthScreenState extends State<AuthScreen> {
                               style: NeumorphicStyle(
                                 shape: NeumorphicShape.flat,
                                 boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(32)),
+                                  BorderRadius.circular(32),
+                                ),
                                 depth: -8,
                                 lightSource: LightSource.topLeft,
                                 color: Colors.grey.shade300,
@@ -94,8 +114,39 @@ class _AuthScreenState extends State<AuthScreen> {
                                 keyboardType: TextInputType.emailAddress,
                                 autocorrect: false,
                                 textCapitalization: TextCapitalization.none,
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().isEmpty ||
+                                      !value.contains('@')) {
+                                    setState(() {
+                                      _emailValid = false;
+                                    });
+                                    return null;
+                                  }
+                                  setState(() {
+                                    _emailValid = true;
+                                  });
+                                  return null;
+                                },
+                                onSaved: (newValue) =>
+                                    _enteredEmail = newValue!,
                               ),
                             ),
+                            if (!_emailValid)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 5.0, top: 5.0),
+                                child: Text(
+                                  'Please enter a valid email adress.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error),
+                                ),
+                              ),
                             const SizedBox(
                               height: 15,
                             ),
@@ -126,13 +177,82 @@ class _AuthScreenState extends State<AuthScreen> {
                                 autocorrect: false,
                                 textCapitalization: TextCapitalization.none,
                                 obscureText: true,
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().length < 6) {
+                                    setState(() {
+                                      _passwordValid = false;
+                                    });
+                                    return null;
+                                  }
+                                  setState(() {
+                                    _passwordValid = true;
+                                  });
+                                  return null;
+                                },
+                                onSaved: (newValue) =>
+                                    _enteredPassword = newValue!,
                               ),
+                            ),
+                            if (!_passwordValid)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 5.0, top: 5.0),
+                                child: Text(
+                                  'Password must be at least 6 characters long.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error),
+                                ),
+                              ),
+                            const SizedBox(
+                              height: 15,
                             ),
                           ],
                         ),
                       ),
                     ),
                   ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+                width: 408,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey.shade100,
+                  ),
+                  onPressed: _submit,
+                  child: const Text('Log In'),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text('OR'),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
