@@ -1,4 +1,7 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});

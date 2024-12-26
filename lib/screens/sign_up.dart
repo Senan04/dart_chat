@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -10,11 +12,54 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   var _enteredEmail = '';
   var _enteredPassword = '';
 
   var _emailValid = true;
   var _passwordValid = true;
+
+  var _emailError = '';
+  var _passwordError = '';
+
+  void _submit() async {
+    final isValid = _formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+  }
+
+  void _showEmailError(bool show, {String message = ''}) {
+    if (!show) {
+      setState(() {
+        _emailValid = true;
+      });
+      return;
+    }
+
+    _emailError = message;
+    setState(() {
+      _emailValid = false;
+    });
+  }
+
+  void _showPasswordError(bool show, {String message = ''}) {
+    if (!show) {
+      setState(() {
+        _passwordValid = true;
+      });
+      return;
+    }
+
+    _passwordError = message;
+    setState(() {
+      _passwordValid = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Form(
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -101,14 +147,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               if (value == null ||
                                   value.trim().isEmpty ||
                                   !value.contains('@')) {
-                                setState(() {
-                                  _emailValid = false;
-                                });
+                                _showEmailError(true,
+                                    message:
+                                        'Please enter a valid email adress.');
                                 return null;
                               }
-                              setState(() {
-                                _emailValid = true;
-                              });
+                              _showEmailError(false);
                               return null;
                             },
                             onSaved: (newValue) => _enteredEmail = newValue!,
@@ -118,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                             child: Text(
-                              'Please enter a valid email adress.',
+                              _emailError,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -159,14 +203,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             obscureText: true,
                             validator: (value) {
                               if (value == null || value.trim().length < 6) {
-                                setState(() {
-                                  _passwordValid = false;
-                                });
+                                _showPasswordError(true,
+                                    message:
+                                        'Password must be at least 6 characters long.');
                                 return null;
                               }
-                              setState(() {
-                                _passwordValid = true;
-                              });
+                              _showPasswordError(false);
                               return null;
                             },
                             onSaved: (newValue) => _enteredPassword = newValue!,
@@ -176,7 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                             child: Text(
-                              'Password must be at least 6 characters long.',
+                              _passwordError,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -194,6 +236,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 50),
+            SizedBox(
+              height: 50,
+              width: 408,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey.shade100,
+                ),
+                onPressed: _submit,
+                child: const Text('Sign up'),
+              ),
+            )
           ],
         ),
       ),
