@@ -31,6 +31,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     _formKey.currentState!.save();
+
+    try {
+      final userCredentials = await _firebase.createUserWithEmailAndPassword(
+          email: _enteredEmail, password: _enteredPassword);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use' || e.code == 'invalid-email') {
+        _showEmailError(true, message: 'Please try another email adress.');
+      } else if (e.code == 'weak-password') {
+        _showPasswordError(true, message: 'Please try a stronger password.');
+      } else {
+        print(Text(e.message!));
+      }
+    }
   }
 
   void _showEmailError(bool show, {String message = ''}) {

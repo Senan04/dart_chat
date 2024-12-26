@@ -1,3 +1,4 @@
+import 'package:dart_chat/screens/sign_up.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -257,6 +258,31 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(height: 20),
+              const SizedBox(
+                width: 300,
+                height: 50,
+                child: Placeholder(),
+              ),
+              const SizedBox(height: 20),
+              const SizedBox(
+                width: 300,
+                height: 50,
+                child: Placeholder(),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Don\'t have an account?'),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (_) => const SignUpScreen())),
+                    child: const Text('Sign up'),
+                  ),
+                ],
               ),
             ],
           ),

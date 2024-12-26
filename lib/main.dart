@@ -1,3 +1,4 @@
+import 'package:dart_chat/screens/log_in.dart';
 import 'package:dart_chat/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -23,7 +24,7 @@ class MainApp extends StatelessWidget {
       theme: FlexThemeData.light(scheme: FlexScheme.cyanM3),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.cyanM3),
       themeMode: ThemeMode.system,
-      home: const SignUpScreen(),
+      home: const LogInScreen(),
     );
   }
 }
