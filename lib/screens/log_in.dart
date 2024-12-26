@@ -1,13 +1,13 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({super.key});
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  State<LogInScreen> createState() => _LogInScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _LogInScreenState extends State<LogInScreen> {
   final _formKey = GlobalKey<FormState>();
 
   var _enteredEmail = '';

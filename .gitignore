@@ -48,8 +48,5 @@ google-services.json
 firebase.json
 lib/firebase_options.dart
 
-# Flutter/Dart build files
-/build/
-
 # Pub package manager lockfile
 pubspec.lock
