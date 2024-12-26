@@ -20,14 +20,58 @@ class _LogInScreenState extends State<LogInScreen> {
   var _emailValid = true;
   var _passwordValid = true;
 
-  void _submit() {
+  var _emailError = '';
+  var _passwordError = '';
+
+  void _submit() async {
     final isValid = _formKey.currentState!.validate();
 
-    if (isValid) {
-      _formKey.currentState!.save();
-      print(_enteredEmail);
-      print(_enteredPassword);
+    if (!isValid) {
+      return;
     }
+
+    _formKey.currentState!.save();
+
+    try {
+      final userCredentials = await _firebase.signInWithEmailAndPassword(
+          email: _enteredEmail, password: _enteredPassword);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email' || e.code == 'user-not-found') {
+        _showEmailError(true, message: 'Please try another email adress.');
+      } else if (e.code == 'wrong-password') {
+        _showPasswordError(true, message: 'Wrong password.');
+      } else {
+        print(Text(e.message!));
+      }
+    }
+  }
+
+  void _showEmailError(bool show, {String message = ''}) {
+    if (!show) {
+      setState(() {
+        _emailValid = true;
+      });
+      return;
+    }
+
+    _emailError = message;
+    setState(() {
+      _emailValid = false;
+    });
+  }
+
+  void _showPasswordError(bool show, {String message = ''}) {
+    if (!show) {
+      setState(() {
+        _passwordValid = true;
+      });
+      return;
+    }
+
+    _passwordError = message;
+    setState(() {
+      _passwordValid = false;
+    });
   }
 
   @override
@@ -122,14 +166,12 @@ class _LogInScreenState extends State<LogInScreen> {
                                   if (value == null ||
                                       value.trim().isEmpty ||
                                       !value.contains('@')) {
-                                    setState(() {
-                                      _emailValid = false;
-                                    });
+                                    _showEmailError(true,
+                                        message:
+                                            'Please enter a valid email adress.');
                                     return null;
                                   }
-                                  setState(() {
-                                    _emailValid = true;
-                                  });
+                                  _showEmailError(false);
                                   return null;
                                 },
                                 onSaved: (newValue) =>
@@ -141,7 +183,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                 padding:
                                     const EdgeInsets.only(left: 5.0, top: 5.0),
                                 child: Text(
-                                  'Please enter a valid email adress.',
+                                  _emailError,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -184,14 +226,12 @@ class _LogInScreenState extends State<LogInScreen> {
                                 validator: (value) {
                                   if (value == null ||
                                       value.trim().length < 6) {
-                                    setState(() {
-                                      _passwordValid = false;
-                                    });
+                                    _showPasswordError(true,
+                                        message:
+                                            'Password must be at least 6 characters long.');
                                     return null;
                                   }
-                                  setState(() {
-                                    _passwordValid = true;
-                                  });
+                                  _showPasswordError(false);
                                   return null;
                                 },
                                 onSaved: (newValue) =>
@@ -203,7 +243,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                 padding:
                                     const EdgeInsets.only(left: 5.0, top: 5.0),
                                 child: Text(
-                                  'Password must be at least 6 characters long.',
+                                  _passwordError,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
