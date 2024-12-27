@@ -44,6 +44,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print(Text(e.message!));
       }
     }
+
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   void _showEmailError(bool show, {String message = ''}) {

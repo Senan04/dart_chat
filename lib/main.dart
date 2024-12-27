@@ -1,6 +1,5 @@
 import 'package:dart_chat/screens/chat.dart';
 import 'package:dart_chat/screens/log_in.dart';
-import 'package:dart_chat/screens/sign_up.dart';
 import 'package:dart_chat/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
