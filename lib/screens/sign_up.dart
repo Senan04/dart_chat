@@ -37,6 +37,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     try {
       final userCredentials = await _firebase.createUserWithEmailAndPassword(
           email: _enteredEmail, password: _enteredPassword);
+
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (_) => Profile(userCredentials: userCredentials)));
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use' || e.code == 'invalid-email') {
         _showEmailError(true, message: 'Please try another email adress.');
@@ -45,11 +50,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       } else {
         print(Text(e.message!));
       }
-    }
-
-    if (context.mounted) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => const Profile()));
     }
   }
 

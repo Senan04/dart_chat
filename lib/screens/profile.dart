@@ -1,12 +1,16 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  const Profile({super.key, required this.userCredentials});
+
+  final UserCredential userCredentials;
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -14,6 +18,17 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   File? _imageFile;
+
+  void _uploadImageToFirebase(File file) async {
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('user_images')
+        .child('${widget.userCredentials.user!.uid}.jpg');
+
+    await storageRef.putFile(file);
+
+    final imageUrl = await storageRef.getDownloadURL();
+  }
 
   void _pickImage() async {
     final pickedImage = await ImagePicker().pickImage(
@@ -30,6 +45,15 @@ class _ProfileState extends State<Profile> {
     setState(() {
       _imageFile = File(pickedImage.path);
     });
+  }
+
+  void _saveAndContinue() {
+    if (_imageFile == null) {
+      return;
+    }
+    _uploadImageToFirebase(_imageFile!);
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -57,7 +81,7 @@ class _ProfileState extends State<Profile> {
         ),
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Colors.grey.shade200,
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: _saveAndContinue,
           label: Text('Continue'),
           icon: Icon(Icons.keyboard_arrow_right),
         ),
