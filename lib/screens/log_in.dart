@@ -1,6 +1,7 @@
-import 'package:dart_chat/screens/sign_up.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:dart_chat/screens/sign_up.dart';
 
 final _firebase = FirebaseAuth.instance;
 

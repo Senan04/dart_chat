@@ -1,12 +1,12 @@
-import 'package:dart_chat/screens/chat.dart';
-import 'package:dart_chat/screens/log_in.dart';
-import 'package:dart_chat/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'firebase_options.dart';
+import 'package:dart_chat/firebase_options.dart';
+import 'package:dart_chat/screens/chat.dart';
+import 'package:dart_chat/screens/log_in.dart';
+import 'package:dart_chat/screens/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

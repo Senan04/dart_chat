@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:dart_chat/screens/profile.dart';
+
 final _firebase = FirebaseAuth.instance;
 
 class SignUpScreen extends StatefulWidget {
@@ -46,7 +48,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     if (context.mounted) {
-      Navigator.of(context).pop();
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (_) => const Profile()));
     }
   }
 
