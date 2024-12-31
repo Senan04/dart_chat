@@ -7,6 +7,8 @@ environment:
   sdk: ^3.5.4
 
 dependencies:
+  chatview: ^2.4.0
+  cloud_firestore: ^5.6.0
   firebase_auth: ^5.3.4
   firebase_core: ^3.9.0
   firebase_storage: ^12.3.7

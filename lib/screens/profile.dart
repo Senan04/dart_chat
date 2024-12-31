@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,18 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   File? _imageFile;
 
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _usernameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _usernameController.dispose();
+    super.dispose();
+  }
+
   void _uploadImageToFirebase(File file) async {
     final storageRef = FirebaseStorage.instance
         .ref()
@@ -28,6 +41,17 @@ class _ProfileState extends State<Profile> {
     await storageRef.putFile(file);
 
     final imageUrl = await storageRef.getDownloadURL();
+  }
+
+  void _uploadUserInfoToFirebase() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userCredentials.user!.uid)
+        .set({
+      'First Name': _firstNameController.text,
+      'Last Name': _lastNameController.text,
+      'Username': _usernameController.text,
+    });
   }
 
   void _pickImage() async {
@@ -52,6 +76,8 @@ class _ProfileState extends State<Profile> {
       return;
     }
     _uploadImageToFirebase(_imageFile!);
+
+    _uploadUserInfoToFirebase();
 
     Navigator.of(context).pop();
   }
@@ -82,8 +108,8 @@ class _ProfileState extends State<Profile> {
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Colors.grey.shade200,
           onPressed: _saveAndContinue,
-          label: Text('Continue'),
-          icon: Icon(Icons.keyboard_arrow_right),
+          label: const Text('Continue'),
+          icon: const Icon(Icons.keyboard_arrow_right),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -116,7 +142,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Neumorphic(
                 margin: const EdgeInsets.all(20),
                 style: NeumorphicStyle(
@@ -140,7 +166,68 @@ class _ProfileState extends State<Profile> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
+                      spacing: 8,
                       children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left: 5.0, bottom: 2.0),
+                          child: Text(
+                            'First Name',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Neumorphic(
+                          style: NeumorphicStyle(
+                            shape: NeumorphicShape.flat,
+                            boxShape: NeumorphicBoxShape.roundRect(
+                              BorderRadius.circular(32),
+                            ),
+                            depth: -8,
+                            lightSource: LightSource.topLeft,
+                            color: Colors.grey.shade300,
+                          ),
+                          child: TextField(
+                            controller: _firstNameController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                                vertical: 12.0,
+                              ),
+                            ),
+                            autocorrect: false,
+                            textCapitalization: TextCapitalization.none,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 5.0, bottom: 2.0),
+                          child: Text(
+                            'Last Name',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Neumorphic(
+                          style: NeumorphicStyle(
+                            shape: NeumorphicShape.flat,
+                            boxShape: NeumorphicBoxShape.roundRect(
+                              BorderRadius.circular(32),
+                            ),
+                            depth: -8,
+                            lightSource: LightSource.topLeft,
+                            color: Colors.grey.shade300,
+                          ),
+                          child: TextField(
+                            controller: _lastNameController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                                vertical: 12.0,
+                              ),
+                            ),
+                            autocorrect: false,
+                            textCapitalization: TextCapitalization.none,
+                          ),
+                        ),
                         const Padding(
                           padding: EdgeInsets.only(left: 5.0, bottom: 2.0),
                           child: Text(
@@ -159,6 +246,7 @@ class _ProfileState extends State<Profile> {
                             color: Colors.grey.shade300,
                           ),
                           child: TextField(
+                            controller: _usernameController,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.symmetric(
@@ -167,7 +255,6 @@ class _ProfileState extends State<Profile> {
                               ),
                             ),
                             autocorrect: false,
-                            textCapitalization: TextCapitalization.none,
                           ),
                         ),
                       ],
