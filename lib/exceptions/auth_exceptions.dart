@@ -1,25 +1,42 @@
-class EmailAlreadyInUseException implements Exception {
+class AuthException implements Exception {
+  final String message;
+
+  AuthException(this.message);
+
   @override
-  String toString() => 'Email is already in use';
+  String toString() => message;
 }
 
-class InvalidEmailException implements Exception {
-  @override
-  String toString() => 'Invalid Email. Please try another.';
+class EmailAlreadyInUseException extends AuthException {
+  EmailAlreadyInUseException() : super('Email is already in use');
 }
 
-class WeakPasswordException implements Exception {
-  @override
-  String toString() => 'Weak password. Please try another.';
+class InvalidEmailException extends AuthException {
+  InvalidEmailException() : super('Invalid Email. Please try another.');
 }
 
-class UserTokenExpiredException implements Exception {
-  @override
-  String toString() => 'Authentication expired';
+class WeakPasswordException extends AuthException {
+  WeakPasswordException() : super('Weak password. Please try another.');
 }
 
-class NetworkRequestFailedException implements Exception {
-  @override
-  String toString() =>
-      'Network request error. Please check your internet connection and try again.';
+class WrongPasswordException extends AuthException {
+  WrongPasswordException() : super('Wrong password.');
+}
+
+class UserNotFoundException extends AuthException {
+  UserNotFoundException() : super('User was not found.');
+}
+
+class UserTokenExpiredException extends AuthException {
+  UserTokenExpiredException() : super('Authentication expired');
+}
+
+class NetworkRequestFailedException extends AuthException {
+  NetworkRequestFailedException()
+      : super(
+            'Network request error. Please check your internet connection and try again.');
+}
+
+class UnknownAuthException extends AuthException {
+  UnknownAuthException(super.message);
 }
