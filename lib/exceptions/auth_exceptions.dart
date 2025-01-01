@@ -1,24 +1,25 @@
 class EmailAlreadyInUseException implements Exception {
-  String message;
-  EmailAlreadyInUseException(this.message);
+  @override
+  String toString() => 'Email is already in use';
 }
 
 class InvalidEmailException implements Exception {
-  String message;
-  InvalidEmailException(this.message);
+  @override
+  String toString() => 'Invalid Email. Please try another.';
 }
 
 class WeakPasswordException implements Exception {
-  String message;
-  WeakPasswordException(this.message);
+  @override
+  String toString() => 'Weak password. Please try another.';
 }
 
 class UserTokenExpiredException implements Exception {
-  String message;
-  UserTokenExpiredException(this.message);
+  @override
+  String toString() => 'Authentication expired';
 }
 
 class NetworkRequestFailedException implements Exception {
-  String message;
-  NetworkRequestFailedException(this.message);
+  @override
+  String toString() =>
+      'Network request error. Please check your internet connection and try again.';
 }
