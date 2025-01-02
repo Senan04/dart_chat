@@ -1,11 +1,11 @@
-class User {
+class AppUser {
   String userID;
   String username;
   String firstName;
   String lastName;
   String? profilePicURL;
 
-  User({
+  AppUser({
     required this.userID,
     required this.username,
     required this.firstName,
@@ -13,7 +13,7 @@ class User {
     this.profilePicURL,
   });
 
-  /// Erstellt einen Benutzer aus einer Map.
+  /// Erstellt einen [AppUser] aus einer [Map].
   ///
   /// Die Map [userData] muss die folgenden Schlüssel enthalten:
   /// - `userID`: Die eindeutige Benutzer-ID.
@@ -21,8 +21,8 @@ class User {
   /// - `firstName`: Der Vorname.
   /// - `lastName`: Der Nachname.
   /// - `profilePicURL`: (optional) Die URL des Profilbildes.
-  factory User.fromMap(Map<String, dynamic> userData) {
-    return User(
+  factory AppUser.fromMap(Map<String, dynamic> userData) {
+    return AppUser(
       userID: userData['userID'],
       username: userData['username'],
       firstName: userData['firstName'],
@@ -31,7 +31,7 @@ class User {
     );
   }
 
-  /// Konvertiert den Benutzer in eine Map.
+  /// Konvertiert den [AppUser] in eine [Map].
   ///
   /// Gibt eine Map zurück, die folgende Schlüssel enthält:
   /// - `userID`: Die eindeutige Benutzer-ID.

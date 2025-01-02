@@ -38,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final userCredentials = await _firebase.createUserWithEmailAndPassword(
           email: _enteredEmail, password: _enteredPassword);
 
+      User? user = userCredentials.user;
       if (context.mounted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (_) => Profile(userCredentials: userCredentials)));
