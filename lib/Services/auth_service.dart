@@ -82,7 +82,13 @@ class AuthService {
     }
   }
 
-  Future<void> signOut() async {
-    await _auth.signOut();
-  }
+  /// Signs out the current user.
+  ///
+  /// If successful, it also updates any [authStateChanges] stream listeners.
+  Future<void> signOut() async => await _auth.signOut();
+
+  /// Notifies about changes to the user's sign-in state (such as sign-in or sign-out).
+  Stream<User?> authStateChanges() => _auth.authStateChanges();
+
+  User? get currentUser => _auth.currentUser;
 }

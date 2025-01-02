@@ -6,8 +6,8 @@ class RemoteStorageService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
   /// Adds or replaces a [File] to the Storage and returns a [Future] that resolves to a [String] containing the download URL.
-  Future<String> addFile({
-    required File file,
+  Future<String> addFile(
+    File file, {
     required String path,
     required String fileName,
   }) async {
