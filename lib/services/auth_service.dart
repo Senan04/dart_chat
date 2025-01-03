@@ -1,9 +1,7 @@
 import 'package:dart_chat/exceptions/auth_exceptions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dart_chat/models/user.dart';
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
+abstract class AuthService {
   /// Registers a new user with the provided `email` and `password`.
   ///
   /// Throws specific exceptions, all of which are subclasses of [AuthException], for common authentication errors:
@@ -17,31 +15,7 @@ class AuthService {
   /// Returns:
   /// - A [Future] that resolves to a [User] object if registration is successful.
   /// - `null` if the user registration fails unexpectedly.
-  Future<User?> registerWithEmail(String email, String password) async {
-    try {
-      final userCredentials = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      return userCredentials.user;
-    } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'email-already-in-use':
-          throw EmailAlreadyInUseException();
-        case 'invalid-email':
-          throw InvalidEmailException();
-        case 'weak-password':
-          throw WeakPasswordException();
-        case 'network-request-failed':
-          throw NetworkRequestFailedException();
-        case 'user-token-expired':
-          throw UserTokenExpiredException();
-        default:
-          throw UnknownAuthException(e.message ?? 'Unknown Auth Exception');
-      }
-    }
-  }
+  Future<User?> registerWithEmail(String email, String password);
 
   /// Signs a user in using their `email` and `password`.
   ///
@@ -56,39 +30,15 @@ class AuthService {
   /// Returns:
   /// - A [Future] that resolves to a [User] object if succesfully signed in.
   /// - `null` if the user registration fails unexpectedly.
-  Future<User?> signInWithEmail(String email, String password) async {
-    try {
-      final userCredentials = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      return userCredentials.user;
-    } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'invalid-email':
-          throw InvalidEmailException();
-        case 'network-request-failed':
-          throw NetworkRequestFailedException();
-        case 'user-token-expired':
-          throw UserTokenExpiredException();
-        case 'user-not-found':
-          throw UserNotFoundException();
-        case 'wrong-password':
-          throw WrongPasswordException();
-        default:
-          throw UnknownAuthException(e.message ?? 'Unknown Auth Exception');
-      }
-    }
-  }
+  Future<User?> signInWithEmail(String email, String password);
 
   /// Signs out the current user.
   ///
   /// If successful, it also updates any [authStateChanges] stream listeners.
-  Future<void> signOut() async => await _auth.signOut();
+  Future<void> signOut();
 
   /// Notifies about changes to the user's sign-in state (such as sign-in or sign-out).
-  Stream<User?> authStateChanges() => _auth.authStateChanges();
+  Stream<User?> authStateChanges();
 
-  User? get currentUser => _auth.currentUser;
+  User? get currentUser;
 }

@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 
-class RemoteStorageService {
+import 'package:dart_chat/services/storage_service.dart';
+
+class FirebaseStorageService extends StorageService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  /// Adds or replaces a [File] to the Storage and returns a [Future] that resolves to a [String] containing the download URL.
+  @override
   Future<String> addFile(
     File file, {
     required String path,
@@ -20,7 +22,7 @@ class RemoteStorageService {
     return imageUrl;
   }
 
-  /// Deletes the [File] at specified `url`
+  @override
   Future<void> deleteFile(String url) async {
     await _storage.refFromURL(url).delete();
   }
