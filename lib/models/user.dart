@@ -13,32 +13,16 @@ class User {
     this.profilePicURL,
   });
 
-  /// Erstellt einen [User] aus einer [Map].
-  ///
-  /// Die Map [userData] muss die folgenden Schlüssel enthalten:
-  /// - `userID`: Die eindeutige Benutzer-ID.
-  /// - `username`: Der Benutzername.
-  /// - `firstName`: Der Vorname.
-  /// - `lastName`: Der Nachname.
-  /// - `profilePicURL`: (optional) Die URL des Profilbildes.
   factory User.fromMap(Map<String, dynamic> userData) {
     return User(
-      userID: userData['userID'],
-      username: userData['username'],
-      firstName: userData['firstName'],
-      lastName: userData['lastName'],
-      profilePicURL: userData['profilePicURL'],
+      userID: userData['userID'] as String,
+      username: userData['username'] as String?,
+      firstName: userData['firstName'] as String?,
+      lastName: userData['lastName'] as String?,
+      profilePicURL: userData['profilePicURL'] as String?,
     );
   }
 
-  /// Konvertiert den [User] in eine [Map].
-  ///
-  /// Gibt eine Map zurück, die folgende Schlüssel enthält:
-  /// - `userID`: Die eindeutige Benutzer-ID.
-  /// - `username`: Der Benutzername.
-  /// - `firstName`: Der Vorname.
-  /// - `lastName`: Der Nachname.
-  /// - `profilePicURL`: (optional) Die URL des Profilbildes.
   Map<String, dynamic> toMap() {
     return {
       'userID': userID,
