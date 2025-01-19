@@ -4,7 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:dart_chat/services/storage_service.dart';
 
-class FirebaseStorageService extends StorageService {
+class FirebaseStorageService implements StorageService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
   @override

@@ -20,7 +20,8 @@ abstract class AuthService {
   /// If successful, it also updates any [authStateChanges] stream listeners.
   Future<void> signOut();
 
-  Stream<User?> authStateChanges();
+  /// Stream of [User.userID]
+  Stream<String?> authStateChanges();
 
-  User? get currentUser;
+  String? get currentUserID;
 }

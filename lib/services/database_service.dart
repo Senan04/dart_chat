@@ -1,8 +1,8 @@
 abstract class DatabaseService {
   Future<void> addDocument({
+    required Map<String, dynamic> data,
     required String collectionPath,
     required String docPath,
-    required Map<String, dynamic> data,
   });
 
   Future<Map<String, dynamic>?> getDocument({
@@ -11,9 +11,9 @@ abstract class DatabaseService {
   });
 
   Future<void> updateDocument({
+    required Map<String, dynamic> data,
     required String collectionPath,
     required String docPath,
-    required Map<String, dynamic> data,
   });
 
   Future<void> deleteDocument({

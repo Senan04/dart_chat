@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:dart_chat/services/database_service.dart';
 
-class FirestoreService extends DatabaseService {
+class FirestoreService implements DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Future<void> addDocument({
+    required Map<String, dynamic> data,
     required String collectionPath,
     required String docPath,
-    required Map<String, dynamic> data,
   }) async {
     await _firestore.collection(collectionPath).doc(docPath).set(data);
   }
@@ -27,9 +27,9 @@ class FirestoreService extends DatabaseService {
 
   @override
   Future<void> updateDocument({
+    required Map<String, dynamic> data,
     required String collectionPath,
     required String docPath,
-    required Map<String, dynamic> data,
   }) async {
     await _firestore.collection(collectionPath).doc(docPath).update(data);
   }
