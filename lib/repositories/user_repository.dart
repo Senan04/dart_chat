@@ -24,8 +24,6 @@ class UserRepository {
   }
 
   Future<void> saveUser(User user) async {
-    _currentUser = user;
-
     final data = user.toMap();
 
     await _databaseService.addDocument(
