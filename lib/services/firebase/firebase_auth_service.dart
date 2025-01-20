@@ -2,20 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase;
 
 import 'package:dart_chat/services/auth_service.dart';
 import 'package:dart_chat/exceptions/auth_exceptions.dart';
-import 'package:dart_chat/models/user.dart';
 
-class FirebaseAuthService extends AuthService {
+class FirebaseAuthService implements AuthService {
   final firebase.FirebaseAuth _auth = firebase.FirebaseAuth.instance;
 
   @override
-  Future<User?> registerWithEmail(String email, String password) async {
+  Future<String?> registerWithEmail(String email, String password) async {
     try {
       final userCredentials = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return _mapFirebaseUserToUser(userCredentials.user);
+      return userCredentials.user?.uid;
     } on firebase.FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'email-already-in-use':
@@ -35,14 +34,14 @@ class FirebaseAuthService extends AuthService {
   }
 
   @override
-  Future<User?> signInWithEmail(String email, String password) async {
+  Future<String?> signInWithEmail(String email, String password) async {
     try {
       final userCredentials = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return _mapFirebaseUserToUser(userCredentials.user);
+      return userCredentials.user?.uid;
     } on firebase.FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'invalid-email':
@@ -65,17 +64,10 @@ class FirebaseAuthService extends AuthService {
   Future<void> signOut() async => await _auth.signOut();
 
   @override
-  Stream<User?> authStateChanges() {
-    return _auth
-        .authStateChanges()
-        .map((firebaseUser) => _mapFirebaseUserToUser(firebaseUser));
+  Stream<String?> authStateChanges() {
+    return _auth.authStateChanges().map((firebaseUser) => firebaseUser?.uid);
   }
 
   @override
-  User? get currentUser => _mapFirebaseUserToUser(_auth.currentUser);
-
-  User? _mapFirebaseUserToUser(firebase.User? firebaseUser) {
-    if (firebaseUser == null) return null;
-    return User(userID: firebaseUser.uid);
-  }
+  String? get currentUserID => _auth.currentUser?.uid;
 }

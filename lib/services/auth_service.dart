@@ -21,7 +21,7 @@ abstract class AuthService {
   Future<void> signOut();
 
   /// Stream of [User.userID]
-  Stream<String?> authStateChanges();
+  Stream<User?> authStateChanges();
 
-  String? get currentUserID;
+  User? get currentUserID;
 }
