@@ -1,4 +1,3 @@
-import 'package:dart_chat/models/user.dart';
 import 'package:dart_chat/services/auth_service.dart';
 
 class AuthRepository {
@@ -6,11 +5,11 @@ class AuthRepository {
 
   AuthRepository(this._authService);
 
-  Future<User?> register(String email, String password) async {
+  Future<String?> register(String email, String password) async {
     return await _authService.registerWithEmail(email, password);
   }
 
-  Future<User?> login(String email, String password) async {
+  Future<String?> login(String email, String password) async {
     return await _authService.signInWithEmail(email, password);
   }
 
