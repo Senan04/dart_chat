@@ -50,3 +50,5 @@ lib/firebase_options.dart
 
 # Pub package manager lockfile
 pubspec.lock
+
+outsourced.txt

@@ -2,7 +2,6 @@ import 'package:dart_chat/Widgets/neumorphic_card.dart';
 import 'package:dart_chat/Widgets/neumorphic_text_form_field.dart';
 import 'package:dart_chat/providers/repository_providers/auth_repository_provider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:dart_chat/screens/sign_up.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,6 +72,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
+            spacing: 20,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -104,7 +104,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         //mainAxisSize: MainAxisSize.min,
                         children: [
-                          NeumorphicTextFormField(
+                          const NeumorphicTextFormField(
                             label: 'E-Mail',
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
@@ -128,7 +128,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                          NeumorphicTextFormField(
+                          const NeumorphicTextFormField(
                             label: 'Password',
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
@@ -149,80 +149,84 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
                                             .error),
                               ),
                             ),
-                          const SizedBox(
-                            height: 15,
-                          ),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 50,
-                width: 408,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey.shade100,
-                  ),
-                  onPressed: _submit,
-                  child: const Text('Log In'),
-                ),
+              loginButton,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: orDivider,
               ),
-              const SizedBox(height: 20),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text('OR'),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
               const SizedBox(
                 width: 300,
                 height: 50,
                 child: Placeholder(),
               ),
-              const SizedBox(height: 20),
               const SizedBox(
                 width: 300,
                 height: 50,
                 child: Placeholder(),
               ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Don\'t have an account?'),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (_) => const SignUpScreen())),
-                    child: const Text('Sign up'),
-                  ),
-                ],
-              ),
+              signUpLink,
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget get loginButton {
+    return SizedBox(
+      height: 50,
+      width: 408,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.grey.shade100,
+        ),
+        onPressed: _submit,
+        child: const Text('Log In'),
+      ),
+    );
+  }
+
+  Widget get orDivider {
+    return const Row(
+      children: [
+        Expanded(
+          child: Divider(
+            thickness: 1,
+            color: Colors.grey,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text('OR'),
+        ),
+        Expanded(
+          child: Divider(
+            thickness: 1,
+            color: Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget get signUpLink {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Don\'t have an account?'),
+        TextButton(
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const SignUpScreen())),
+          child: const Text('Sign up'),
+        ),
+      ],
     );
   }
 }

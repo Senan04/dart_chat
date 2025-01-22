@@ -2,7 +2,6 @@ import 'package:dart_chat/providers/repository_providers/auth_repository_provide
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:dart_chat/firebase_options.dart';
 import 'package:dart_chat/screens/chat.dart';
