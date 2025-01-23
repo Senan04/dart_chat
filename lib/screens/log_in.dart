@@ -1,5 +1,6 @@
 import 'package:dart_chat/Widgets/neumorphic_card.dart';
 import 'package:dart_chat/Widgets/neumorphic_text_form_field.dart';
+import 'package:dart_chat/providers/auth_form_provider.dart';
 import 'package:dart_chat/providers/repository_providers/auth_repository_provider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 
@@ -14,60 +15,11 @@ class LogInScreen extends ConsumerStatefulWidget {
 }
 
 class _LogInScreenState extends ConsumerState<LogInScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  var _enteredEmail = '';
-  var _enteredPassword = '';
-
-  var _emailValid = true;
-  var _passwordValid = true;
-
-  var _emailError = '';
-  var _passwordError = '';
-
-  void _submit() async {
-    final authRepository = ref.watch(authRepositoryProvider);
-
-    final isValid = _formKey.currentState!.validate();
-
-    if (!isValid) {
-      return;
-    }
-
-    _formKey.currentState!.save();
-    authRepository.login(_enteredEmail, _enteredPassword);
-  }
-
-  void _showEmailError(bool show, {String message = ''}) {
-    if (!show) {
-      setState(() {
-        _emailValid = true;
-      });
-      return;
-    }
-
-    _emailError = message;
-    setState(() {
-      _emailValid = false;
-    });
-  }
-
-  void _showPasswordError(bool show, {String message = ''}) {
-    if (!show) {
-      setState(() {
-        _passwordValid = true;
-      });
-      return;
-    }
-
-    _passwordError = message;
-    setState(() {
-      _passwordValid = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final formState = ref.watch(formNotifierProvider);
+    final formNotifier = ref.read(formNotifierProvider.notifier);
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -98,60 +50,52 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        //mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const NeumorphicTextFormField(
-                            label: 'E-Mail',
-                            keyboardType: TextInputType.emailAddress,
-                            autocorrect: false,
-                            textCapitalization: TextCapitalization.none,
-                          ),
-                          if (!_emailValid)
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 5.0, top: 5.0),
-                              child: Text(
-                                _emailError,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .apply(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .error),
-                              ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const NeumorphicTextFormField(
+                          label: 'E-Mail',
+                          keyboardType: TextInputType.emailAddress,
+                          autocorrect: false,
+                          textCapitalization: TextCapitalization.none,
+                        ),
+                        if (!_emailValid)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0, top: 5.0),
+                            child: Text(
+                              _emailError,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .apply(
+                                      color:
+                                          Theme.of(context).colorScheme.error),
                             ),
-                          const SizedBox(
-                            height: 15,
                           ),
-                          const NeumorphicTextFormField(
-                            label: 'Password',
-                            autocorrect: false,
-                            textCapitalization: TextCapitalization.none,
-                            obscureText: true,
-                          ),
-                          if (!_passwordValid)
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 5.0, top: 5.0),
-                              child: Text(
-                                _passwordError,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .apply(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .error),
-                              ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const NeumorphicTextFormField(
+                          label: 'Password',
+                          autocorrect: false,
+                          textCapitalization: TextCapitalization.none,
+                          obscureText: true,
+                        ),
+                        if (!_passwordValid)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0, top: 5.0),
+                            child: Text(
+                              _passwordError,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .apply(
+                                      color:
+                                          Theme.of(context).colorScheme.error),
                             ),
-                          const SizedBox(height: 15),
-                        ],
-                      ),
+                          ),
+                        const SizedBox(height: 15),
+                      ],
                     ),
                   ),
                 ),
