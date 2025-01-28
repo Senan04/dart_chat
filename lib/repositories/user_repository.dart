@@ -20,11 +20,11 @@ class UserRepository {
       docPath: userID,
     );
 
-    return userData != null ? User.fromMap(userData) : null;
+    return userData != null ? User.fromJson(userData) : null;
   }
 
   Future<void> saveUser(User user) async {
-    final data = user.toMap();
+    final data = user.toJson();
 
     await _databaseService.addDocument(
       data: data,

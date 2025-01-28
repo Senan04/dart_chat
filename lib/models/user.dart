@@ -1,35 +1,19 @@
-class User {
-  String userID;
-  String? username;
-  String? firstName;
-  String? lastName;
-  String? profilePicURL;
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-  User({
-    required this.userID,
-    this.username,
-    this.firstName,
-    this.lastName,
-    this.profilePicURL,
-  });
+part 'user.freezed.dart';
 
-  factory User.fromMap(Map<String, dynamic> userData) {
-    return User(
-      userID: userData['userID'] as String,
-      username: userData['username'] as String?,
-      firstName: userData['firstName'] as String?,
-      lastName: userData['lastName'] as String?,
-      profilePicURL: userData['profilePicURL'] as String?,
-    );
-  }
+part 'user.g.dart';
 
-  Map<String, dynamic> toMap() {
-    return {
-      'userID': userID,
-      'username': username,
-      'firstName': firstName,
-      'lastName': lastName,
-      'profilePicURL': profilePicURL,
-    };
-  }
+@freezed
+class User with _$User {
+  const factory User({
+    required String userID,
+    String? username,
+    String? firstName,
+    String? lastName,
+    String? profilePicURL,
+  }) = _User;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
