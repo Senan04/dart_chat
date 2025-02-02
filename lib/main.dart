@@ -1,13 +1,13 @@
-import 'package:dart_chat/providers/repository_providers/auth_repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:dart_chat/firebase_options.dart';
 import 'package:dart_chat/screens/chat.dart';
 import 'package:dart_chat/screens/log_in.dart';
 import 'package:dart_chat/screens/splash.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dart_chat/providers/repository_providers/auth_repository_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +36,7 @@ class MainApp extends ConsumerWidget {
             return const SplashScreen();
           }
 
-          return snapshot.hasData ? const ChatScreen() : const LogInScreen();
+          return snapshot.hasData ? const ChatScreen() : LogInScreen();
         },
       ),
     );

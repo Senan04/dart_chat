@@ -1,38 +1,42 @@
+import 'package:dart_chat/providers/text_field_error_provider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
-class NeumorphicTextFormField extends StatelessWidget {
-  final String? _label;
-  final bool _autocorrect;
-  final bool _obscureText;
-  final TextInputType? _keyboardType;
-  final TextCapitalization _textCapitalization;
-  final void Function(String?)? _onSubmitted;
+class NeumorphicTextFormField extends ConsumerWidget {
+  static final uuid = const Uuid();
 
-  const NeumorphicTextFormField({
+  final String? label;
+  final bool autocorrect;
+  final bool obscureText;
+  final TextInputType? keyboardType;
+  final TextCapitalization textCapitalization;
+  final void Function(String?)? onSubmitted;
+  final String id;
+
+  NeumorphicTextFormField({
     super.key,
-    String? label,
-    bool autocorrect = true,
-    bool obscureText = false,
-    TextInputType? keyboardType,
-    TextCapitalization textCapitalization = TextCapitalization.none,
-    void Function(String?)? onSubmitted,
-  })  : _label = label,
-        _autocorrect = autocorrect,
-        _obscureText = obscureText,
-        _textCapitalization = textCapitalization,
-        _keyboardType = keyboardType,
-        _onSubmitted = onSubmitted;
+    this.label,
+    this.autocorrect = true,
+    this.obscureText = false,
+    this.keyboardType,
+    this.textCapitalization = TextCapitalization.none,
+    this.onSubmitted,
+    String? id,
+  }) : id = id ?? uuid.v4();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    String? error = ref.watch(textFieldErrorNotifierProvider(id));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (_label != null)
+        if (label != null)
           Padding(
             padding: const EdgeInsets.only(left: 5.0, bottom: 8.0),
             child: Text(
-              _label,
+              label!,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -54,13 +58,24 @@ class NeumorphicTextFormField extends StatelessWidget {
                 vertical: 12.0,
               ),
             ),
-            autocorrect: _autocorrect,
-            obscureText: _obscureText,
-            keyboardType: _keyboardType,
-            textCapitalization: _textCapitalization,
-            onSubmitted: _onSubmitted,
+            autocorrect: autocorrect,
+            obscureText: obscureText,
+            keyboardType: keyboardType,
+            textCapitalization: textCapitalization,
+            onSubmitted: onSubmitted,
           ),
         ),
+        if (error != null)
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0, top: 10.0),
+            child: Text(
+              error,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .apply(color: Theme.of(context).colorScheme.error),
+            ),
+          ),
       ],
     );
   }
