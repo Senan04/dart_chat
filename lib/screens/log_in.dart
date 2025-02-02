@@ -1,24 +1,23 @@
-import 'package:dart_chat/Widgets/neumorphic_card.dart';
-import 'package:dart_chat/Widgets/neumorphic_text_form_field.dart';
-import 'package:dart_chat/providers/auth_form_provider.dart';
-import 'package:dart_chat/providers/repository_providers/auth_repository_provider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import 'package:dart_chat/screens/sign_up.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dart_chat/Widgets/neumorphic_card.dart';
+import 'package:dart_chat/Widgets/neumorphic_text_form_field.dart';
+import 'package:dart_chat/providers/auth_form_validator_provider.dart';
 
-class LogInScreen extends ConsumerStatefulWidget {
-  const LogInScreen({super.key});
+class LogInScreen extends ConsumerWidget {
+  LogInScreen({super.key});
+
+  static final uuid = const Uuid();
+
+  final emailTextFieldId = uuid.v4();
+  final passwordTextFieldId = uuid.v4();
 
   @override
-  ConsumerState<LogInScreen> createState() => _LogInScreenState();
-}
-
-class _LogInScreenState extends ConsumerState<LogInScreen> {
-  @override
-  Widget build(BuildContext context) {
-    final formState = ref.watch(formNotifierProvider);
-    final formNotifier = ref.read(formNotifierProvider.notifier);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authFormValidator = ref.read(authFormValidatorProvider);
 
     return Scaffold(
       body: Center(
@@ -47,63 +46,45 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
                 ),
               ),
               NeumorphicCard(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const NeumorphicTextFormField(
-                          label: 'E-Mail',
-                          keyboardType: TextInputType.emailAddress,
-                          autocorrect: false,
-                          textCapitalization: TextCapitalization.none,
-                        ),
-                        if (!_emailValid)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5.0, top: 5.0),
-                            child: Text(
-                              _emailError,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .apply(
-                                      color:
-                                          Theme.of(context).colorScheme.error),
-                            ),
-                          ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const NeumorphicTextFormField(
-                          label: 'Password',
-                          autocorrect: false,
-                          textCapitalization: TextCapitalization.none,
-                          obscureText: true,
-                        ),
-                        if (!_passwordValid)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5.0, top: 5.0),
-                            child: Text(
-                              _passwordError,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .apply(
-                                      color:
-                                          Theme.of(context).colorScheme.error),
-                            ),
-                          ),
-                        const SizedBox(height: 15),
-                      ],
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    spacing: 15,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      NeumorphicTextFormField(
+                        id: emailTextFieldId,
+                        label: 'E-Mail',
+                        keyboardType: TextInputType.emailAddress,
+                        autocorrect: false,
+                        textCapitalization: TextCapitalization.none,
+                        onSubmitted: (email) {
+                          if (email == null) return;
+                          authFormValidator.validateEmail(
+                              email, emailTextFieldId);
+                        },
+                      ),
+                      NeumorphicTextFormField(
+                        id: passwordTextFieldId,
+                        label: 'Password',
+                        autocorrect: false,
+                        textCapitalization: TextCapitalization.none,
+                        obscureText: true,
+                        onSubmitted: (password) {
+                          if (password == null) return;
+                          authFormValidator.validatePassword(
+                              password, passwordTextFieldId);
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                    ],
                   ),
                 ),
               ),
-              loginButton,
+              _loginButton,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: orDivider,
+                child: _orDivider,
               ),
               const SizedBox(
                 width: 300,
@@ -115,7 +96,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
                 height: 50,
                 child: Placeholder(),
               ),
-              signUpLink,
+              _signUpLink(context),
             ],
           ),
         ),
@@ -123,7 +104,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
     );
   }
 
-  Widget get loginButton {
+  Widget get _loginButton {
     return SizedBox(
       height: 50,
       width: 408,
@@ -131,13 +112,13 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.grey.shade100,
         ),
-        onPressed: _submit,
+        onPressed: () {},
         child: const Text('Log In'),
       ),
     );
   }
 
-  Widget get orDivider {
+  Widget get _orDivider {
     return const Row(
       children: [
         Expanded(
@@ -160,7 +141,7 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
     );
   }
 
-  Widget get signUpLink {
+  Widget _signUpLink(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
