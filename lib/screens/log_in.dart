@@ -1,7 +1,7 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
+import 'package:dart_chat/utils/uuid_generator.dart';
 import 'package:dart_chat/screens/sign_up.dart';
 import 'package:dart_chat/Widgets/neumorphic_card.dart';
 import 'package:dart_chat/Widgets/neumorphic_text_form_field.dart';
@@ -10,10 +10,8 @@ import 'package:dart_chat/providers/auth_form_validator_provider.dart';
 class LogInScreen extends ConsumerWidget {
   LogInScreen({super.key});
 
-  static final uuid = const Uuid();
-
-  final emailTextFieldId = uuid.v4();
-  final passwordTextFieldId = uuid.v4();
+  final emailTextFieldId = UuidGenerator.newID();
+  final passwordTextFieldId = UuidGenerator.newID();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -148,7 +146,7 @@ class LogInScreen extends ConsumerWidget {
         const Text('Don\'t have an account?'),
         TextButton(
           onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => const SignUpScreen())),
+              .push(MaterialPageRoute(builder: (_) => SignUpScreen())),
           child: const Text('Sign up'),
         ),
       ],
