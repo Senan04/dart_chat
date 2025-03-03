@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'text_field_error_provider.dart';
+part of 'text_field_state_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$textFieldErrorNotifierHash() =>
-    r'bfc7e3c6fd87b8c5f58817fcf2df270a59dd7109';
+String _$textFieldStateNotifierHash() =>
+    r'289a06a2ee2da0417f8b21fa6b0483a241fa03c6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,36 +30,37 @@ class _SystemHash {
   }
 }
 
-abstract class _$TextFieldErrorNotifier
-    extends BuildlessAutoDisposeNotifier<String?> {
+abstract class _$TextFieldStateNotifier
+    extends BuildlessAutoDisposeNotifier<({String? text, String? error})> {
   late final String id;
 
-  String? build(
+  ({String? text, String? error}) build(
     String id,
   );
 }
 
-/// See also [TextFieldErrorNotifier].
-@ProviderFor(TextFieldErrorNotifier)
-const textFieldErrorNotifierProvider = TextFieldErrorNotifierFamily();
+/// See also [TextFieldStateNotifier].
+@ProviderFor(TextFieldStateNotifier)
+const textFieldStateNotifierProvider = TextFieldStateNotifierFamily();
 
-/// See also [TextFieldErrorNotifier].
-class TextFieldErrorNotifierFamily extends Family<String?> {
-  /// See also [TextFieldErrorNotifier].
-  const TextFieldErrorNotifierFamily();
+/// See also [TextFieldStateNotifier].
+class TextFieldStateNotifierFamily
+    extends Family<({String? text, String? error})> {
+  /// See also [TextFieldStateNotifier].
+  const TextFieldStateNotifierFamily();
 
-  /// See also [TextFieldErrorNotifier].
-  TextFieldErrorNotifierProvider call(
+  /// See also [TextFieldStateNotifier].
+  TextFieldStateNotifierProvider call(
     String id,
   ) {
-    return TextFieldErrorNotifierProvider(
+    return TextFieldStateNotifierProvider(
       id,
     );
   }
 
   @override
-  TextFieldErrorNotifierProvider getProviderOverride(
-    covariant TextFieldErrorNotifierProvider provider,
+  TextFieldStateNotifierProvider getProviderOverride(
+    covariant TextFieldStateNotifierProvider provider,
   ) {
     return call(
       provider.id,
@@ -78,30 +79,30 @@ class TextFieldErrorNotifierFamily extends Family<String?> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'textFieldErrorNotifierProvider';
+  String? get name => r'textFieldStateNotifierProvider';
 }
 
-/// See also [TextFieldErrorNotifier].
-class TextFieldErrorNotifierProvider
-    extends AutoDisposeNotifierProviderImpl<TextFieldErrorNotifier, String?> {
-  /// See also [TextFieldErrorNotifier].
-  TextFieldErrorNotifierProvider(
+/// See also [TextFieldStateNotifier].
+class TextFieldStateNotifierProvider extends AutoDisposeNotifierProviderImpl<
+    TextFieldStateNotifier, ({String? text, String? error})> {
+  /// See also [TextFieldStateNotifier].
+  TextFieldStateNotifierProvider(
     String id,
   ) : this._internal(
-          () => TextFieldErrorNotifier()..id = id,
-          from: textFieldErrorNotifierProvider,
-          name: r'textFieldErrorNotifierProvider',
+          () => TextFieldStateNotifier()..id = id,
+          from: textFieldStateNotifierProvider,
+          name: r'textFieldStateNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$textFieldErrorNotifierHash,
-          dependencies: TextFieldErrorNotifierFamily._dependencies,
+                  : _$textFieldStateNotifierHash,
+          dependencies: TextFieldStateNotifierFamily._dependencies,
           allTransitiveDependencies:
-              TextFieldErrorNotifierFamily._allTransitiveDependencies,
+              TextFieldStateNotifierFamily._allTransitiveDependencies,
           id: id,
         );
 
-  TextFieldErrorNotifierProvider._internal(
+  TextFieldStateNotifierProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -114,8 +115,8 @@ class TextFieldErrorNotifierProvider
   final String id;
 
   @override
-  String? runNotifierBuild(
-    covariant TextFieldErrorNotifier notifier,
+  ({String? text, String? error}) runNotifierBuild(
+    covariant TextFieldStateNotifier notifier,
   ) {
     return notifier.build(
       id,
@@ -123,10 +124,10 @@ class TextFieldErrorNotifierProvider
   }
 
   @override
-  Override overrideWith(TextFieldErrorNotifier Function() create) {
+  Override overrideWith(TextFieldStateNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: TextFieldErrorNotifierProvider._internal(
+      override: TextFieldStateNotifierProvider._internal(
         () => create()..id = id,
         from: from,
         name: null,
@@ -139,14 +140,14 @@ class TextFieldErrorNotifierProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<TextFieldErrorNotifier, String?>
-      createElement() {
-    return _TextFieldErrorNotifierProviderElement(this);
+  AutoDisposeNotifierProviderElement<TextFieldStateNotifier,
+      ({String? text, String? error})> createElement() {
+    return _TextFieldStateNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TextFieldErrorNotifierProvider && other.id == id;
+    return other is TextFieldStateNotifierProvider && other.id == id;
   }
 
   @override
@@ -160,18 +161,19 @@ class TextFieldErrorNotifierProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin TextFieldErrorNotifierRef on AutoDisposeNotifierProviderRef<String?> {
+mixin TextFieldStateNotifierRef
+    on AutoDisposeNotifierProviderRef<({String? text, String? error})> {
   /// The parameter `id` of this provider.
   String get id;
 }
 
-class _TextFieldErrorNotifierProviderElement
-    extends AutoDisposeNotifierProviderElement<TextFieldErrorNotifier, String?>
-    with TextFieldErrorNotifierRef {
-  _TextFieldErrorNotifierProviderElement(super.provider);
+class _TextFieldStateNotifierProviderElement
+    extends AutoDisposeNotifierProviderElement<TextFieldStateNotifier,
+        ({String? text, String? error})> with TextFieldStateNotifierRef {
+  _TextFieldStateNotifierProviderElement(super.provider);
 
   @override
-  String get id => (origin as TextFieldErrorNotifierProvider).id;
+  String get id => (origin as TextFieldStateNotifierProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

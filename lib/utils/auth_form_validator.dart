@@ -1,4 +1,4 @@
-import 'package:dart_chat/providers/text_field_error_provider.dart';
+import 'package:dart_chat/providers/text_field_state_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthFormValidator {
@@ -11,7 +11,7 @@ class AuthFormValidator {
 
     if (textFieldID != null) {
       ref
-          .read(textFieldErrorNotifierProvider(textFieldID).notifier)
+          .read(textFieldStateNotifierProvider(textFieldID).notifier)
           .setError(error);
     }
 
@@ -23,7 +23,7 @@ class AuthFormValidator {
 
     if (textFieldID != null) {
       ref
-          .read(textFieldErrorNotifierProvider(textFieldID).notifier)
+          .read(textFieldStateNotifierProvider(textFieldID).notifier)
           .setError(error);
     }
 
@@ -32,7 +32,8 @@ class AuthFormValidator {
 
   String? _validatePassword(String password) {
     final minLength = 8;
-    final requirements = RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)$');
+    final requirements =
+        RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,}$');
 
     if (password.length < minLength) {
       return 'Password must be at least $minLength characters long.';
