@@ -1,11 +1,9 @@
 import 'package:dart_chat/providers/text_field_error_provider.dart';
+import 'package:dart_chat/utils/uuid_generator.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
 class NeumorphicTextFormField extends ConsumerWidget {
-  static final uuid = const Uuid();
-
   final String? label;
   final bool autocorrect;
   final bool obscureText;
@@ -23,11 +21,11 @@ class NeumorphicTextFormField extends ConsumerWidget {
     this.textCapitalization = TextCapitalization.none,
     this.onSubmitted,
     String? id,
-  }) : id = id ?? uuid.v4();
+  }) : id = id ?? UuidGenerator.newID();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String? error = ref.watch(textFieldErrorNotifierProvider(id));
+    var textFieldState = ref.watch(textFieldStateNotifierProvider(id));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,11 +63,11 @@ class NeumorphicTextFormField extends ConsumerWidget {
             onSubmitted: onSubmitted,
           ),
         ),
-        if (error != null)
+        if (textFieldState.error != null)
           Padding(
             padding: const EdgeInsets.only(left: 5.0, top: 10.0),
             child: Text(
-              error,
+              textFieldState.error!,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
