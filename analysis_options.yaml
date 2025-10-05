@@ -1,0 +1,14 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_single_quotes: true # Verwende einfache Anführungszeichen ('') statt doppelter ("")
+    always_declare_return_types: true # Deklariere explizit Rückgabetypen für Funktionen/Methoden
+    avoid_positional_boolean_parameters: true # Vermeidet verwirrende boolesche Parameter
+    unnecessary_parenthesis: true # Entfernt unnötige Klammern
+    # sort_pub_dependencies: true               # Stellt sicher, dass Abhängigkeiten in pubspec.yaml sortiert sind
+    sort_child_properties_last: true # Stellt sicher, dass das 'child' oder 'children' Property zuletzt kommt
+
+analyzer:
+  plugins:
+    - custom_lint
