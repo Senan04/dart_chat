@@ -1,6 +1,6 @@
 name: dart_chat
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -24,6 +24,7 @@ dependencies:
   google_fonts: ^6.3.2
   flex_color_scheme: ^8.3.0
   json_annotation: ^4.9.0
+  flutter_neumorphic_plus: ^3.5.0
 
 dev_dependencies:
   flutter_test:
@@ -38,3 +39,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/logo.png
