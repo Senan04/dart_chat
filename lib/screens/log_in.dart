@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dart_chat/utils/uuid_generator.dart';
 import 'package:dart_chat/screens/sign_up.dart';
 import 'package:dart_chat/Widgets/neumorphic_card.dart';
-import 'package:dart_chat/Widgets/neumorphic_text_form_field.dart';
 import 'package:dart_chat/providers/auth_form_validator_provider.dart';
 
 class LogInScreen extends ConsumerWidget {
@@ -26,7 +25,11 @@ class LogInScreen extends ConsumerWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(
-                    top: 30, bottom: 20, left: 20, right: 20),
+                  top: 30,
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                ),
                 width: 300,
                 child: ClipRect(
                   child: Align(
@@ -38,10 +41,7 @@ class LogInScreen extends ConsumerWidget {
               ),
               const Text(
                 'DartChat',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               NeumorphicCard(
                 child: Padding(
@@ -50,30 +50,31 @@ class LogInScreen extends ConsumerWidget {
                     spacing: 15,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NeumorphicTextFormField(
-                        id: emailTextFieldId,
-                        label: 'E-Mail',
-                        keyboardType: TextInputType.emailAddress,
-                        autocorrect: false,
-                        textCapitalization: TextCapitalization.none,
-                        onEditingComplete: (email) {
-                          if (email == null) return;
-                          authFormValidator.validateEmail(
-                              email, emailTextFieldId);
-                        },
-                      ),
-                      NeumorphicTextFormField(
-                        id: passwordTextFieldId,
-                        label: 'Password',
-                        autocorrect: false,
-                        textCapitalization: TextCapitalization.none,
-                        obscureText: true,
-                        onEditingComplete: (password) {
-                          if (password == null) return;
-                          authFormValidator.validatePassword(
-                              password, passwordTextFieldId);
-                        },
-                      ),
+                      // NeumorphicTextFormField(
+                      //   id: emailTextFieldId,
+                      //   label: 'E-Mail',
+                      //   keyboardType: TextInputType.emailAddress,
+                      //   autocorrect: false,
+                      //   textCapitalization: TextCapitalization.none,
+                      //   onEditingComplete: (email) {
+                      //     if (email == null) return;
+                      //     authFormValidator.validateEmail(
+                      //         email, emailTextFieldId);
+                      //   },
+                      // ),
+                      // NeumorphicTextFormField(
+                      //   id: passwordTextFieldId,
+                      //   label: 'Password',
+                      //   autocorrect: false,
+                      //   textCapitalization: TextCapitalization.none,
+                      //   obscureText: true,
+                      //   onEditingComplete: (password) {
+                      //     if (password == null) return;
+                      //     authFormValidator.validatePassword(
+                      //         password, passwordTextFieldId);
+                      //   },
+                      // ),
+                      const Placeholder(),
                       const SizedBox(height: 10),
                     ],
                   ),
@@ -84,16 +85,8 @@ class LogInScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: _orDivider,
               ),
-              const SizedBox(
-                width: 300,
-                height: 50,
-                child: Placeholder(),
-              ),
-              const SizedBox(
-                width: 300,
-                height: 50,
-                child: Placeholder(),
-              ),
+              const SizedBox(width: 300, height: 50, child: Placeholder()),
+              const SizedBox(width: 300, height: 50, child: Placeholder()),
               _signUpLink(context),
             ],
           ),
@@ -107,9 +100,7 @@ class LogInScreen extends ConsumerWidget {
       height: 50,
       width: 408,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.grey.shade100,
-        ),
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade100),
         onPressed: () {},
         child: const Text('Log In'),
       ),
@@ -119,22 +110,12 @@ class LogInScreen extends ConsumerWidget {
   Widget get _orDivider {
     return const Row(
       children: [
-        Expanded(
-          child: Divider(
-            thickness: 1,
-            color: Colors.grey,
-          ),
-        ),
+        Expanded(child: Divider(thickness: 1, color: Colors.grey)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: Text('OR'),
         ),
-        Expanded(
-          child: Divider(
-            thickness: 1,
-            color: Colors.grey,
-          ),
-        ),
+        Expanded(child: Divider(thickness: 1, color: Colors.grey)),
       ],
     );
   }
@@ -145,8 +126,9 @@ class LogInScreen extends ConsumerWidget {
       children: [
         const Text('Don\'t have an account?'),
         TextButton(
-          onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => SignUpScreen())),
+          onPressed: () => Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => SignUpScreen())),
           child: const Text('Sign up'),
         ),
       ],
